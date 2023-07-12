@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using System.Globalization;
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
-app.MapGet("/", () => "ƒомашн€€ работа 1\n\n/customs_duty?price=(float)[цена_посылки]&weight=(float)[вес_посылки] - стоимость налоговой пошлины;\n/current_date_time?lang=€з_я« - узнать сегодн€шнюю дату в подробном формате");
+app.MapGet("/", () => "ƒомашн€€ работа 1\n\n/customs_duty?price=[цена_посылки]f&weight=[вес_посылки]f - стоимость налоговой пошлины;\n/current_date_time?lang=[€з] - узнать сегодн€шнюю дату в подробном формате");
 app.MapGet("/customs_duty", (float? price, float? weight) => GetDuty(price, weight));
 app.MapGet("/current_date_time", (string lang) => GetCurrentDate(lang));
 app.Run();
