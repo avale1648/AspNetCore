@@ -10,51 +10,41 @@ namespace Homework_3
 {
     public class Catalogue
     {
-        private static int key = 1;
-        private ConcurrentDictionary<int, Item> items = new ConcurrentDictionary<int, Item>();
+        private ConcurrentDictionary<Guid, Item> items = new ConcurrentDictionary<Guid, Item>();
         public Catalogue()
         {
-            items.TryAdd(key, new Item(key, "Штаны", 1000));
-            key++;
-            items.TryAdd(key, new Item(key, "Рубашка", 750));
-            key++;
-            items.TryAdd(key, new Item(key, "Футболка", 500));
-            key++;
+            var guid = Guid.NewGuid();
+            items.TryAdd(guid, new Item("Штаны", 1000));
+            guid = Guid.NewGuid();
+            items.TryAdd(guid, new Item("Рубашка", 750));
+            guid = Guid.NewGuid();
+            items.TryAdd(guid, new Item("Футболка", 500));
         }
-        public async Task Create(Item item)
+        public bool Create(Item value)
         {
-            item.Id = key;
-            await Task.Run(() => { items.TryAdd(key, item); key++; });
+            var key = Guid.NewGuid();
+            return items.TryAdd(key, value);
         }
-        public async Task<Item> Read(int id)
+        public KeyValuePair<Guid,Item> Read(Guid key)
         {
-            if (id <= 0 || id > items.Count)
-                throw new ArgumentOutOfRangeException("id");
-            await Task.Delay(0);
-            return items[id];
+            var keyValue = new KeyValuePair<Guid, Item>(key, items[key]);
+            return keyValue;
         }
-        public async Task<KeyValuePair<int, Item>[]> ReadAll()
+        public KeyValuePair<Guid, Item>[] ReadAll()
         {
-            List<Item> temp = new List<Item>();
-            await Task.Delay(0);
             return items.ToArray();
         }
-        public async Task Update(int id, Item item)
+        public bool Update(Guid key, Item value)
         {
-            if (id <= 0 || id > items.Count)
-                throw new ArgumentOutOfRangeException("id");
-            await Task.Run(() => items.TryUpdate(id, item, items[id]));
-
+            return items.TryUpdate(key, value, items[key]);
         }
-        public async Task Delete(int id)
+        public bool Delete(Guid key)
         {
-            if (id <= 0 || id > items.Count)
-                throw new ArgumentOutOfRangeException("id");
-            await Task.Run(() => items.TryRemove(new KeyValuePair<int, Item>(id, items[id])));
+            return items.TryRemove(new KeyValuePair<Guid, Item>(key, items[key]));
         }
-        public async Task Clear()
+        public void Clear()
         {
-            await Task.Run(() => items.Clear());
+            items.Clear();
         }
     }
 }

@@ -6,8 +6,8 @@ builder.Services.Configure<JsonOptions>
 (options => { options.SerializerOptions.WriteIndented = true; });
 var app = builder.Build();
 var catalogue = new Catalogue();
-app.MapGet("/", () => 
-"Asp.Net: Домашняя работа №2" +
+app.MapGet("/", () =>
+"Asp.Net: Домашняя работа №3" +
 "\nREST:" +
 "\n[Post]/catalogue - создать новый товар;" +
 "\n[Get]/catalogue/{id} - получить товар с идентификатором {id};" +
@@ -17,24 +17,24 @@ app.MapGet("/", () =>
 "\n[Delete]/catalogue - очистить каталог." +
 "\nRPC:" +
 "\n[Post]/create - создать новый товар;" +
-"\n[Get]/read?id={id} - получить товар с идентификатором {id};"+
+"\n[Get]/read?id={id} - получить товар с идентификатором {id};" +
 "\n[Get]/read_all - получить весь каталог;" +
 "\n[Post]/update?id={id} - редактировать товар c идентификатором {id};" +
 "\n[Post]/delete?id={id} - удалить товар с идентификатором {id};" +
 "\n[Post]/clear - очистить каталог.");
 //REST
-app.MapPost("/catalogue", async (Item item) => {await catalogue.Create(item); return Results.Created("/catalogue", item); });
-app.MapGet("/catalogue/{id}", async (int id) => await catalogue.Read(id));
-app.MapGet("/catalogue", async () => await catalogue.ReadAll());
-app.MapPut("/catalogue/{id}", async (int id, Item item) => await catalogue.Update(id, item)) ;
-app.MapDelete("/catalogue/{id}", async (int id) => await catalogue.Delete(id));
-app.MapDelete("/catalogue", async () => await catalogue.Clear());
+app.MapPost("/catalogue", (Item item) => { catalogue.Create(item); return Results.Created("/catalogue", item); });
+app.MapGet("/catalogue/{id}", (Guid id) => catalogue.Read(id));
+app.MapGet("/catalogue", () => catalogue.ReadAll());
+app.MapPut("/catalogue/{id}", (Guid id, Item item) => catalogue.Update(id, item));
+app.MapDelete("/catalogue/{id}", (Guid id) => catalogue.Delete(id));
+app.MapDelete("/catalogue", () => catalogue.Clear());
 //RPC
-app.MapPost("/create", async (Item item) => { await catalogue.Create(item); return Results.Created("/create", item); });
-app.MapGet("/read", async (int id) => await catalogue.Read(id));
-app.MapGet("/read_all", async () => await catalogue.ReadAll());
-app.MapPost("/update", async (int id, Item item) => await catalogue.Update(id, item));
-app.MapPost("/delete", async (int id) => await catalogue.Delete(id));
-app.MapPost("/clear", async () => await catalogue.Clear());
+app.MapPost("/create", (Item item) => { catalogue.Create(item); return Results.Created("/create", item); });
+app.MapGet("/read", (Guid id) => catalogue.Read(id));
+app.MapGet("/read_all", () => catalogue.ReadAll());
+app.MapPost("/update", (Guid id, Item item) => catalogue.Update(id, item));
+app.MapPost("/delete", (Guid id) => catalogue.Delete(id));
+app.MapPost("/clear", () => catalogue.Clear());
 //
 app.Run();
