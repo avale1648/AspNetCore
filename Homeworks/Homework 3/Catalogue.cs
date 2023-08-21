@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Concurrent;
 //Реализация 1: BlockingCollection
@@ -7,26 +8,31 @@ namespace Homework_3
 {
     public class Catalogue
     {
-        private BlockingCollection<Item> items = new BlockingCollection<Item>()
+        private static int key = 1;
+        private ConcurrentDictionary<int, Item> items = new ConcurrentDictionary<int, Item>();
+        public Catalogue()
         {
-            new Item (1, "Socks", 100),
-            new Item (2, "Pants", 500),
-            new Item (3, "Pants", 350)
-        };
+            items.TryAdd(key, new Item("Штаны", 1000));
+            key++;
+            items.TryAdd(key, new Item("Рубашка", 750));
+            key++;
+            items.TryAdd(key, new Item("Футболка", 500));
+            key++;
+        }
         public async Task Create(Item item)
         {
-            await Task.Run(()=>items.Add(item));
+            await Task.Run(() => { items.TryAdd(key, item); key++; });
         }
         public async Task<Item> Read(int id)
         {
             if (id <= 0 || id > items.Count)
                 throw new ArgumentOutOfRangeException("id");
-            List<Item> temp = new();
-            await Task.Run(() => temp = items.ToList());
-            return temp.Find(i => i.Id == id);
+            await Task.Delay(0);
+            return items[id];
         }
-        public async Task<Item[]> ReadAll()
+        public async Task<KeyValuePair<int, Item>[]> ReadAll()
         {
+            List<Item> temp = new List<Item>();
             await Task.Delay(0);
             return items.ToArray();
         }
@@ -34,23 +40,18 @@ namespace Homework_3
         {
             if (id <= 0 || id > items.Count)
                 throw new ArgumentOutOfRangeException("id");
-            await Task.Run(() => items.Take());
-            item.Id = id;
-            await Task.Run(() => items.Add(item));
+            await Task.Run(() => items.TryUpdate(id, item, items[id]));
 
         }
         public async Task Delete(int id)
         {
             if (id <= 0 || id > items.Count)
                 throw new ArgumentOutOfRangeException("id");
-            await Task.Run(() => items.Take());
+            await Task.Run(() => items.TryRemove(new KeyValuePair<int, Item>(id, items[id])));
         }
         public async Task Clear()
         {
-            for(int i = 0; i < items.Count; i++)
-            {
-                await Task.Run(()=>items.Take());
-            }
+            await Task.Run(() => items.Clear());
         }
     }
 }
