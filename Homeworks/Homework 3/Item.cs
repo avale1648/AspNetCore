@@ -4,11 +4,11 @@ namespace Homework_3
 {
     public class Item
     {
-        //public int Id { get; set; } = 0;
+        public int Id { get; set; } = 0;
         public string Name { get; set; } = string.Empty;
         public decimal Price { get; set; } = decimal.Zero;
         public Item() { }
-        public Item(string name, decimal price)
+        public Item(int id, string name, decimal price)
         {
             if (string.IsNullOrEmpty(name))
             { throw new ArgumentNullException("name"); }
@@ -16,6 +16,7 @@ namespace Homework_3
             {
                 throw new ArgumentOutOfRangeException("price");
             }
+            Id = id;
             Name = name;
             Price = price;
         }
@@ -27,6 +28,7 @@ namespace Homework_3
             {
                 throw new ArgumentOutOfRangeException("price");
             }
+            this.Id = that.Id;
             this.Name = that.Name;
             this.Price = that.Price;
         }

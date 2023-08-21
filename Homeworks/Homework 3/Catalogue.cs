@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Concurrent;
-//Реализация 1: BlockingCollection
-//Операции по изменению и удалению не удалось реализовать в желаемом виде при использовании данной коллекции, т.к. методы .Take() и .TryTake() "берут" первый эл-т из коллекции
+//Реализация 2: ConcurrentDictionary
+//Операции по изменению и удалению удалось реализовать в желаемом виде при использовании данной коллекции.
+//Первоначальным минусом было то, что мне пришлось изменить структуру классa Item, убрав поле Id,
+//однако позже Id был возвращен. Id "синхронизирован" с полем Catalogue.key.
 namespace Homework_3
 {
     public class Catalogue
@@ -12,15 +14,16 @@ namespace Homework_3
         private ConcurrentDictionary<int, Item> items = new ConcurrentDictionary<int, Item>();
         public Catalogue()
         {
-            items.TryAdd(key, new Item("Штаны", 1000));
+            items.TryAdd(key, new Item(key, "Штаны", 1000));
             key++;
-            items.TryAdd(key, new Item("Рубашка", 750));
+            items.TryAdd(key, new Item(key, "Рубашка", 750));
             key++;
-            items.TryAdd(key, new Item("Футболка", 500));
+            items.TryAdd(key, new Item(key, "Футболка", 500));
             key++;
         }
         public async Task Create(Item item)
         {
+            item.Id = key;
             await Task.Run(() => { items.TryAdd(key, item); key++; });
         }
         public async Task<Item> Read(int id)
