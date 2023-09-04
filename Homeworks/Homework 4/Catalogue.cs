@@ -3,10 +3,7 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Concurrent;
-//Реализация 2: ConcurrentDictionary
-//Операции по изменению и удалению удалось реализовать в желаемом виде при использовании данной коллекции.
-//Первоначальным минусом было то, что мне пришлось изменить структуру классa Item, убрав поле Id,
-//однако позже Id был возвращен. Id "синхронизирован" с полем Catalogue.key.
+//
 namespace Homework_4
 {
     public class Catalogue : ICatalogue
@@ -38,17 +35,22 @@ namespace Homework_4
         public KeyValuePair<Guid, Item> Read(IWeek weekDiscount, Guid key)
         {
             var day = weekDiscount.GetDateTime().DayOfWeek;
-            var copy = items[key];
+            var copy = new KeyValuePair<Guid, Item>(key, (Item)items[key].Clone());
             if (day == DayOfWeek.Monday)
             {
-                copy.Price = copy.Price - (decimal)0.3 * copy.Price;
+                copy.Value.Price = copy.Value.Price - 0.3m * copy.Value.Price;
             }
-            var keyValue = new KeyValuePair<Guid, Item>(key, items[key]);
-            return keyValue;
+            return copy;
         }
         public KeyValuePair<Guid, Item>[] ReadAll(IWeek weekDiscount)
         {
-            var copies = items;
+            //Копирование
+            var copies = new ConcurrentDictionary<Guid, Item>();
+            foreach(var item in items)
+            {
+                copies.TryAdd(item.Key, (Item)item.Value.Clone());
+            }
+            //Обработка дня
             var day = weekDiscount.GetDateTime().DayOfWeek;
             if (day == DayOfWeek.Monday)
             {

@@ -2,7 +2,7 @@
 //
 namespace Homework_4
 {
-    public class Item
+    public class Item: ICloneable
     {
         public string Name { get; set; } = string.Empty;
         public decimal Price { get; set; } = decimal.Zero;
@@ -32,6 +32,12 @@ namespace Homework_4
             }
             this.Name = that.Name;
             this.Price = that.Price;
+        }
+
+        public object Clone()
+        {
+            var clonedItem = new Item(this.Name, this.Price);
+            return clonedItem;
         }
     }
 }

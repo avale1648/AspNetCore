@@ -35,8 +35,8 @@ app.MapDelete("/catalogue/{id}", (Guid id) => catalogue.Delete(id));
 app.MapDelete("/catalogue", () => catalogue.Clear());
 //RPC
 app.MapPost("/create", (Item item) => { catalogue.Create(item); return Results.Created("/create", item); });
-app.MapGet("/read", (Guid id) => catalogue.Read(id));
-app.MapGet("/read_all", () => catalogue.ReadAll());
+app.MapGet("/read", (Guid id) => catalogue.Read(weekDiscount, id));
+app.MapGet("/read_all", () => catalogue.ReadAll(weekDiscount));
 app.MapPost("/update", (Guid id, Item item) => catalogue.Update(id, item));
 app.MapPost("/delete", (Guid id) => catalogue.Delete(id));
 app.MapPost("/clear", () => catalogue.Clear());
