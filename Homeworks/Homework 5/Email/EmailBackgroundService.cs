@@ -15,7 +15,7 @@ namespace Homework_5.Email
             var stopwatch = Stopwatch.StartNew();
             while(await timer.WaitForNextTickAsync(stoppingToken))
             {
-                await new EmailService().SendEmailAsync("avale1648@gmail.com", "Сервер", $"Сервер был запущен и работает {stopwatch.Elapsed}");
+                await new EmailSender().SendEmailAsync("server", "asp2022pd011@rodion-m.ru", "smtp.beget.com", 25, "6WU4x2be", "avale1648", "avale1648@gmail.com", "Сервер", $"Сервер был запущен и работает {stopwatch.Elapsed}");
             }   
         }
     }
