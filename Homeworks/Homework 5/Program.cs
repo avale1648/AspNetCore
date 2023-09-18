@@ -1,13 +1,45 @@
 //Usings
-using Homework_4;
 using Microsoft.AspNetCore.Http.Json;
+using Homework_5.Week;
+using Homework_5.Catalogue;
+using Homework_5.MemoryChecker;
+using Homework_5.Email;
+using Homework_5.Email.Background;
 //Builder
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddControllers();
+builder.Configuration.AddEnvironmentVariables().Build();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 builder.Services.Configure<JsonOptions>(options => { options.SerializerOptions.WriteIndented = true; });
+builder.Services.AddSingleton<IMemoryChecker, MemoryChecker>();
+builder.Services.AddSingleton<IEmailSender, SmtpEmailSender>
+(
+    serviceProvider => new SmtpEmailSender(LoggerFactory.Create
+    (
+        builder =>
+        {
+                   builder.AddSimpleConsole(i => i.ColorBehavior = Microsoft.Extensions.Logging.Console.LoggerColorBehavior.Enabled);
+        }
+    ).CreateLogger("Program")
+ ));
+builder.Services.AddHostedService
+(
+    serviceProvider => new BackgroundEmailService
+    (
+        serviceProvider.GetService<IEmailSender>() ?? throw new ArgumentNullException("Email Sender"), serviceProvider.GetService<IMemoryChecker>() ?? throw new ArgumentNullException("Memory Check"), TimeSpan.FromSeconds(10), builder.Configuration
+    )
+) ;
 builder.Services.AddSingleton<ICatalogue, Catalogue>();
 builder.Services.AddSingleton<IWeek, WeekDiscount>();
 //App
 var app = builder.Build();
+app.UseSwagger();
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    options.RoutePrefix = string.Empty;
+});
 var catalogue = app.Services.GetService<ICatalogue>();
 var weekDiscount = app.Services.GetService<IWeek>();
 app.MapGet("/", () =>

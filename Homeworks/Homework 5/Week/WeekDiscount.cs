@@ -1,4 +1,4 @@
-﻿namespace Homework_4
+﻿namespace Homework_5.Week
 {
     public class WeekDiscount : IWeek
     {

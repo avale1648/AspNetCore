@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Concurrent;
+using Homework_5.Week;
 //
-namespace Homework_4
+namespace Homework_5.Catalogue
 {
     public class Catalogue : ICatalogue
     {
@@ -46,7 +47,7 @@ namespace Homework_4
         {
             //Копирование
             var copies = new ConcurrentDictionary<Guid, Item>();
-            foreach(var item in items)
+            foreach (var item in items)
             {
                 copies.TryAdd(item.Key, (Item)item.Value.Clone());
             }

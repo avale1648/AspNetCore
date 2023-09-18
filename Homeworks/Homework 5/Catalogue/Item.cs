@@ -1,8 +1,8 @@
 ﻿using System.Xml.Linq;
 //
-namespace Homework_4
+namespace Homework_5.Catalogue
 {
-    public class Item: ICloneable
+    public class Item : ICloneable
     {
         public string Name { get; set; } = string.Empty;
         public decimal Price { get; set; } = decimal.Zero;
@@ -11,7 +11,7 @@ namespace Homework_4
         {
             if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentNullException("name"); 
+                throw new ArgumentNullException("name");
             }
             if (price <= 0)
             {
@@ -24,19 +24,19 @@ namespace Homework_4
         {
             if (string.IsNullOrEmpty(that.Name))
             {
-                throw new ArgumentNullException("name"); 
+                throw new ArgumentNullException("name");
             }
             if (that.Price <= 0)
             {
                 throw new ArgumentOutOfRangeException("price");
             }
-            this.Name = that.Name;
-            this.Price = that.Price;
+            Name = that.Name;
+            Price = that.Price;
         }
 
         public object Clone()
         {
-            var clonedItem = new Item(this.Name, this.Price);
+            var clonedItem = new Item(Name, Price);
             return clonedItem;
         }
     }
