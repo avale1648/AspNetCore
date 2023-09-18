@@ -1,28 +1,17 @@
 //Usings
-using Homework_5;
-using Homework_5.Catalogue;
-using Homework_5.Email;
-using Homework_5.Week;
+using Homework_4;
 using Microsoft.AspNetCore.Http.Json;
 //Builder
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<JsonOptions>(options => { options.SerializerOptions.WriteIndented = true; });
 builder.Services.AddSingleton<ICatalogue, Catalogue>();
 builder.Services.AddSingleton<IWeek, WeekDiscount>();
-builder.Services.AddScoped<IEmailSender, EmailSender>();
-builder.Services.AddHostedService<EmailBackgroundService>();
 //App
 var app = builder.Build();
 var catalogue = app.Services.GetService<ICatalogue>();
 var weekDiscount = app.Services.GetService<IWeek>();
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    var sender = services.GetRequiredService<IEmailSender>();
-}
-var emailBackgroundService = app.Services.GetService<EmailBackgroundService>();
 app.MapGet("/", () =>
-"Asp.Net: Домашняя работа №5, Сегодня " + weekDiscount.GetDateTime().ToShortDateString() + " " + weekDiscount.GetDateTime().DayOfWeek +
+"Asp.Net: Домашняя работа №4, Сегодня " + weekDiscount.GetDateTime().ToShortDateString() + " " + weekDiscount.GetDateTime().DayOfWeek +
 "\nREST:" +
 "\n[Post]/catalogue - создать новый товар;" +
 "\n[Get]/catalogue/{id} - получить товар с идентификатором {id};" +
