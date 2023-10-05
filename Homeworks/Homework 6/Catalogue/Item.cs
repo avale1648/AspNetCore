@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 //
-namespace Homework_5.Catalogue
+namespace Homework_6.Catalogue
 {
     public class Item : ICloneable
     {

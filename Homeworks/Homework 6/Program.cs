@@ -1,9 +1,9 @@
 //Usings
 using Microsoft.AspNetCore.Http.Json;
-using Homework_5.Week;
-using Homework_5.Catalogue;
-using Homework_5.Email;
-using Homework_5.Email.HostedService;
+using Homework_6.Week;
+using Homework_6.Catalogue;
+using Homework_6.Email;
+using Homework_6.Email.HostedService;
 //Builder
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();

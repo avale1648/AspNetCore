@@ -1,4 +1,4 @@
-﻿using Homework_5.Util;
+﻿using Homework_6.Util;
 using MailKit.Security;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -6,7 +6,7 @@ using Org.BouncyCastle.Asn1.Cms;
 using Org.BouncyCastle.Tls;
 using System;
 //
-namespace Homework_5.Email.HostedService
+namespace Homework_6.Email.HostedService
 {
     public class EmailHostedService : IHostedService
     {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Routing.Template;
 using System.Net.Mime;
-using Homework_5.Week;
+using Homework_6.Week;
 ///
-namespace Homework_5.Catalogue
+namespace Homework_6.Catalogue
 {
     public interface ICatalogue
     {

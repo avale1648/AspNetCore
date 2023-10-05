@@ -2,7 +2,7 @@
 using MailKit.Security;
 using MimeKit;
 //
-namespace Homework_5.Email
+namespace Homework_6.Email
 {
     public class SmtpEmailSender : IEmailSender, IAsyncDisposable
     {

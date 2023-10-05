@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
-namespace Homework_5.Email
+namespace Homework_6.Email
 {
     public interface IEmailSender
     {

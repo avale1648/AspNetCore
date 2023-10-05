@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Concurrent;
-using Homework_5.Week;
+using Homework_6.Week;
 //
-namespace Homework_5.Catalogue
+namespace Homework_6.Catalogue
 {
     public class Catalogue : ICatalogue
     {
