@@ -8,11 +8,11 @@ namespace Homework_2023_10_14.Models
         public Catalogue()
         {
             var guid = Guid.NewGuid();
-            items.TryAdd(guid, new Item("Штаны", 1000, "https://www.google.com/url?sa=i&url=https%3A%2F%2Flcls.ru%2Fcollection%2Fbryuki%2Fproduct%2Fsportivnye-shtany-element&psig=AOvVaw2H-PDdmrKbeL4O1UTmv3mm&ust=1697638039497000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCNCVl9Sg_YEDFQAAAAAdAAAAABAD"));
+            items.TryAdd(guid, new Item("Штаны", 1000, "https://cdn.lcls.ru/r/Ok0TDTN-0uw/rs:fit:1000:0:1/plain/images/products/1/5597/450647517/empty_10.jpg"));
             guid = Guid.NewGuid();
-            items.TryAdd(guid, new Item("Рубашка", 750, "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.gulliver.ru%2Fproducts%2Fbelaya-rubashka-s-dlinnym-rukavom-gulliver-219gsbc2319%2F&psig=AOvVaw34NqbDm5_GixcDTnmCym9x&ust=1697637807227000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCNjJvOWf_YEDFQAAAAAdAAAAABAD"));
+            items.TryAdd(guid, new Item("Рубашка", 750, "https://cdn.lcls.ru/r/kN2hlwyTWms/rs:fit:1000:0:1/plain/images/products/1/2405/765307237/rugby1.jpg"));
             guid = Guid.NewGuid();
-            items.TryAdd(guid, new Item("Футболка", 500, "https://www.google.com/url?sa=i&url=https%3A%2F%2Fmos-poshiv.ru%2Fproduct%2Ffutbolka-chernaya-oversayz-100-hlopok-plotnost-190-g&psig=AOvVaw1aqMEO7rOAFCfQ23FUmZon&ust=1697638072708000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCLjRrOOg_YEDFQAAAAAdAAAAABAD"));
+            items.TryAdd(guid, new Item("Футболка", 500, "https://cdn.lcls.ru/r/tJwXKeYjs4M/rs:fit:1000:0:1/plain/images/products/1/547/749617699/86993472.jpg"));
         }
         public bool Create(Item value)
         {
