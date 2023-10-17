@@ -1,0 +1,35 @@
+﻿@inject ICatalogue Catalogue;
+@page "/catalogue";
+<h3>Каталог</h3>
+<br />
+<table id="catalogue">
+	<thead>
+		<tr>
+			<th>ИД</th>
+			<th>Наименование</th>
+			<th>Цена, руб.</th>
+			<th>Изображение</th>
+		</tr>
+	</thead>
+	<tbody>
+	@foreach(var item in _items)
+	{
+		<tr>
+			<td>@item.Key</td>
+			<td>@item.Value.Name</td>
+			<td>@item.Value.Price</td>
+			<td>
+				<img alt="" src="@item.Value.ImageLink">
+			</td>
+		</tr>
+	}
+	</tbody>
+</table>
+@code {
+	private IReadOnlyList<KeyValuePair<Guid,Item>> _items;
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+		_items = Catalogue.ReadAll();
+	}
+}

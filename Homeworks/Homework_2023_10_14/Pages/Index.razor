@@ -1,0 +1,12 @@
+﻿@page "/"
+
+<PageTitle>Главная страница</PageTitle>
+
+<h1>Добро пожаловать в интернет-магазин Пересвет</h1>
+
+Текущее время сервера - @current
+
+@code
+{
+	private string current = DateTime.Now.ToString();
+}

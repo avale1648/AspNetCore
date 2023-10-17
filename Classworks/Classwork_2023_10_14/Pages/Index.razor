@@ -1,0 +1,8 @@
+﻿@page "/"
+<PageTitle>Главная страница</PageTitle>
+<h1>Добро пожаловать в интернет магазин Топорофф</h1>
+<p>Текущее время сервера: @currentServerDateTime.ToString();</p>
+@code
+{
+	private DateTime currentServerDateTime = DateTime.Now;
+}
