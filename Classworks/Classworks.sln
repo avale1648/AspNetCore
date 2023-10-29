@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Classwork2", "Classwork2\Cl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Classwork 7", "Classwork 7\Classwork 7.csproj", "{242F95EE-DC10-42B0-BDA2-9C9B9FC27CF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Classwork_2023_10_14", "Classwork_2023_10_14\Classwork_2023_10_14.csproj", "{4B19F74E-AB9B-43E5-B84C-0B9B222F0528}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Classwork_2023_10_14", "Classwork_2023_10_14\Classwork_2023_10_14.csproj", "{4B19F74E-AB9B-43E5-B84C-0B9B222F0528}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server_Classwork_2023_10_28", "Server_Classwork_2023_10_28\Server_Classwork_2023_10_28.csproj", "{43E17CA6-D244-49AA-BF51-3362710F4717}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{4B19F74E-AB9B-43E5-B84C-0B9B222F0528}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B19F74E-AB9B-43E5-B84C-0B9B222F0528}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B19F74E-AB9B-43E5-B84C-0B9B222F0528}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43E17CA6-D244-49AA-BF51-3362710F4717}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43E17CA6-D244-49AA-BF51-3362710F4717}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43E17CA6-D244-49AA-BF51-3362710F4717}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43E17CA6-D244-49AA-BF51-3362710F4717}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
