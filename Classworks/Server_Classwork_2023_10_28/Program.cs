@@ -20,9 +20,13 @@ app.UseRouting();
 app.UseAuthorization();
 app.MapRazorPages();
 app.MapGet("/orders", async (AppDbContext context) => await context.Orders.ToListAsync());
-app.MapGet("/orders", async (AppDbContext context, int id) => await context.Orders.FirstOrDefaultAsync(o => o.Id == id));
-app.MapPost("/orders", async (AppDbContext context, Order order) => await context.Orders.AddAsync(order));
-app.MapPut("orders", async (AppDbContext context, int id, Order new_) => 
+//app.MapGet("/orders", async (AppDbContext context, int id) => await context.Orders.FirstOrDefaultAsync(o => o.Id == id));
+app.MapPost("/orders", async (AppDbContext context, Order order) => 
+{
+	await context.Orders.AddAsync(order);
+	await context.SaveChangesAsync();
+});
+app.MapPut("/orders", async (AppDbContext context, int id, Order new_) => 
 { 
 	var result = await context.Orders.SingleOrDefaultAsync(o => o.Id == id); 
 	if(result != null)
@@ -32,5 +36,9 @@ app.MapPut("orders", async (AppDbContext context, int id, Order new_) =>
 		await context.SaveChangesAsync();
 	}
 });
-app.MapDelete("/orders", async (AppDbContext context, int id) => await Task.Run(context.Orders.Remove(context.Orders.SingleOrDefault(o => o.Id == id))));
+app.MapDelete("/orders", async (AppDbContext context, int id) => 
+{
+	context.Orders.Remove(context.Orders.SingleOrDefault(o => o.Id == id));
+	await context.SaveChangesAsync();
+});
 app.Run();
