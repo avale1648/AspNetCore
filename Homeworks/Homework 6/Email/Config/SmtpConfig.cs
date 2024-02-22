@@ -1,17 +1,19 @@
-﻿namespace Homework_6.Email.Config
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Homework_6.Email.Config
 {
 #pragma warning disable CS8618
-    public class SmtpConfig
-    {
-        public string Host { get; set; }
-        public int Port { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string SenderName { get; set; }
-        public string SenderEmail { get; set;}
-        public string ReceiverName { get; set; }
-        public string ReceiverEmail { get; set; }
-        public string Subject { get; set; }
-        public string Body { get; set; }
-    }
+	public class SmtpConfig
+	{
+		[Required] public string Host { get; set; }
+		[Range(1, ushort.MaxValue)] public int Port { get; set; }
+		[Required] public string Username { get; set; }
+		[Required] public string Password { get; set; }
+		[Required] public string SenderName { get; set; }
+		[EmailAddress] public string SenderEmail { get; set; }
+		[Required] public string ReceiverName { get; set; }
+		[EmailAddress] public string ReceiverEmail { get; set; }
+		[Required] public string Subject { get; set; }
+		[Required] public string Body { get; set; }
+	}
 }

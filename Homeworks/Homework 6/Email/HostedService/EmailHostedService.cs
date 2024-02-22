@@ -1,4 +1,5 @@
-﻿using Homework_6.Util;
+﻿using Homework_6.Email.Config;
+using Homework_6.Util;
 using MailKit.Security;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -10,40 +11,14 @@ namespace Homework_6.Email.HostedService
 {
     public class EmailHostedService : IHostedService
     {
-        private int _timeSpan;
-        private TimeUnit _timeUnit;
+        private int _timeSpan = 1;
+        private TimeUnit _timeUnit = TimeUnit.Minute;
         private SmtpEmailSender _sender;
-        private string _senderName;
-        private string _senderEmail;
-        private string _recieverName;
-        private string _recieverEmail;
-        private string _subject;
-        private string _body;
         //public SmtpEmailSender(string host, int port, SecureSocketOptions options, string login, string password);
         //public async Task SendEmailAsync(string senderName, string senderEmail, string recieverName, string recieverEmail, string subject, string body, CancellationToken token);
-        public EmailHostedService()
+        public EmailHostedService(SmtpConfig config)
         {
-            _timeSpan = 1;
-            _timeUnit = TimeUnit.Minute;
-            _sender = new SmtpEmailSender("smtp.beget.com", 25, SecureSocketOptions.Auto, "asp2022pd011@rodion-m.ru", "6WU4x2be");
-            _senderName = "Сервер";
-            _senderEmail = "asp2022pd011@rodion-m.ru";
-            _recieverName = "avale1648";
-            _recieverEmail = "avale1648@gmail.com";
-            _subject = "Сервер запущен";
-            _body = "Сервер запущен";
-        }
-        public EmailHostedService(int timeSpan, TimeUnit timeUnit, string host, int port, SecureSocketOptions options, string login, string password, string senderName, string senderEmail, string recieverName, string recieverEmail, string subject, string body)
-        {
-            _timeSpan = timeSpan;
-            _timeUnit = timeUnit;
-            _sender = new SmtpEmailSender(host, port, options, login, password);
-            _senderName = senderName;
-            _senderEmail = senderEmail;
-            _recieverName = recieverName;
-            _recieverEmail = recieverEmail;
-            _subject = subject;
-            _body = body;
+            _sender = new SmtpEmailSender(config);
         }
         private async Task SendEmailEveryTimeSpanAsync(CancellationToken cancellationToken)
         {
@@ -51,7 +26,7 @@ namespace Homework_6.Email.HostedService
             {
                 try
                 {
-                    await _sender.SendEmailAsync(_senderName, _senderEmail, _recieverName, _recieverEmail, _subject, _body, cancellationToken);
+                    await _sender.SendEmailAsync(cancellationToken);
                 }
                 catch(Exception ex)
                 {

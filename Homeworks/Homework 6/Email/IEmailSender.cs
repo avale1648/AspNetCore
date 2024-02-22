@@ -3,6 +3,6 @@ namespace Homework_6.Email
 {
     public interface IEmailSender
     {
-        public Task SendEmailAsync(string senderName, string senderEmail, string recieverName, string recieverEmail, string subject, string body, CancellationToken token);
+        public Task SendEmailAsync(CancellationToken token);
     }
 }
