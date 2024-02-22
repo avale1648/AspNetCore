@@ -25,7 +25,7 @@ namespace Homework_6.Email.HostedService
         {
             _timeSpan = 1;
             _timeUnit = TimeUnit.Minute;
-            _sender = new("smtp.beget.com", 25, SecureSocketOptions.Auto, "asp2022pd011@rodion-m.ru", "6WU4x2be");
+            _sender = new SmtpEmailSender("smtp.beget.com", 25, SecureSocketOptions.Auto, "asp2022pd011@rodion-m.ru", "6WU4x2be");
             _senderName = "Сервер";
             _senderEmail = "asp2022pd011@rodion-m.ru";
             _recieverName = "avale1648";
@@ -37,7 +37,7 @@ namespace Homework_6.Email.HostedService
         {
             _timeSpan = timeSpan;
             _timeUnit = timeUnit;
-            _sender = new(host, port, options, login, password);
+            _sender = new SmtpEmailSender(host, port, options, login, password);
             _senderName = senderName;
             _senderEmail = senderEmail;
             _recieverName = recieverName;
@@ -45,7 +45,6 @@ namespace Homework_6.Email.HostedService
             _subject = subject;
             _body = body;
         }
-
         private async Task SendEmailEveryTimeSpanAsync(CancellationToken cancellationToken)
         {
             while (!cancellationToken.IsCancellationRequested)
@@ -81,7 +80,7 @@ namespace Homework_6.Email.HostedService
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            await SendEmailEveryTimeSpanAsync(cancellationToken);
+            await _sender.DisposeAsync();
         }
     }
 }
