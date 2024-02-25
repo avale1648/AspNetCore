@@ -16,5 +16,6 @@ namespace Homework_2023_09_07.Config
 		[Required] public string Body { get; set; }
 		[Required] public bool UseSsl { get; set; }
 		[Required] public int Retries { get; set; }
+		[Required] public TimeSpan Timeout { get; set; }
 	}
 }

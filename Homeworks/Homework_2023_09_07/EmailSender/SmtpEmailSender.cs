@@ -1,8 +1,12 @@
 ﻿using Homework_2023_09_07.Config;
 using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Connections;
 using Microsoft.Extensions.Options;
 using MimeKit;
+using Polly;
+using Polly.Retry;
 using System.Linq.Expressions;
+using System.Threading;
 namespace Homework_2023_09_07.EmailSender
 {
 	public class SmtpEmailSender : IEmailSender, IAsyncDisposable, IDisposable
@@ -11,6 +15,8 @@ namespace Homework_2023_09_07.EmailSender
 		private readonly SmtpConfig _config;
 		private readonly SmtpClient _client;
 		private readonly ILogger<SmtpEmailSender> _logger;
+		private AsyncRetryPolicy _policy;
+		private TimeSpan _timeout;
 		private bool _isDisposed;
 		private int _retries;
 		public SmtpEmailSender(IOptionsSnapshot<SmtpConfig> config, ILogger<SmtpEmailSender> logger)
@@ -20,13 +26,13 @@ namespace Homework_2023_09_07.EmailSender
 			_logger = logger;
 			_isDisposed = false;
 			_retries = _config.Retries;
+			_timeout = _config.Timeout;
+			_policy = Policy.Handle<Exception>().WaitAndRetryAsync(_config.Retries, t => _timeout * t, (ex, timespan, retry, context) => _logger.LogWarning(ex, "Retrying: {retry}", retry));
 		}
 		public async Task SendAsync(CancellationToken token)
 		{
-			if(_retries > 0)
+			var result = await _policy.ExecuteAndCaptureAsync(async () =>
 			{
-				try
-				{
 					await ConnectAndAuthenticateAsync(token);
 					var message = new MimeMessage();
 					message.From.Add(new MailboxAddress(_config.SenderName, _config.SenderEmail));
@@ -38,13 +44,11 @@ namespace Homework_2023_09_07.EmailSender
 					};
 					var response = await _client.SendAsync(message, token);
 					_logger.LogInformation("Server response: {@response}", response);
-				}
-				catch (Exception ex)
-				{
-					_logger.LogError(ex.Message);
-					_retries = _retries - 1;
-					await SendAsync(token);
-				}
+			});
+			if(result.Outcome == OutcomeType.Failure)
+			{
+				_logger.LogError(result.FinalException, "Error while sending email");
+				throw result.FinalException;
 			}
 		}
 		private async Task ConnectAndAuthenticateAsync(CancellationToken token)
