@@ -1,0 +1,8 @@
+﻿@using WebApp.Frontend.Models;
+@using WebApp.Frontend.Components;
+
+@inject ICatalogue Catalogue;
+
+@page "/catalogue/{ProductId: int}"
+
+<ProductComponent Product="_product"/>

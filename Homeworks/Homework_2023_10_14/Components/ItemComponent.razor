@@ -1,0 +1,14 @@
+﻿<div>
+	<img src="@Item.ImageLink" alt="@Item.ImageLink"/>
+	<p>Название: @Item.Name</p>
+	<p>Цена: @Item.Price</p>
+	<button></button>
+</div>
+@code {
+	[Parameter]
+	public Item Item { get; set; }
+	public ItemComponent(Item item)
+	{
+		Item = item;
+	}
+}

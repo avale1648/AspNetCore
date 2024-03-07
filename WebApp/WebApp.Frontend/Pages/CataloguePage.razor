@@ -1,0 +1,16 @@
+﻿@page "/catalogue"
+
+@using WebApp.Frontend.Models;
+
+@inject  ICatalogue Catalogue;
+@inject NavigationManager NavigationManager
+
+@using WebApp.Frontend.Components;
+
+<div>
+	@foreach(var product in _products)
+	{
+		<ProductComponent Product="product" @onclick="()=>NavigateToProductPage(product.Id)" style="cursor: pointer;"/>
+	}
+</div>
+<button @onclick="()=>NavigateToAddPage()">Добавить товар</button>

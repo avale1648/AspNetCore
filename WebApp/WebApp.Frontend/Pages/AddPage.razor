@@ -1,0 +1,29 @@
+﻿@using WebApp.Frontend.Models;
+@using MudBlazor;
+
+@inject ICatalogue Catalogue
+
+@page "/catalogue/add"
+
+<MudForm>
+    <MudItem xs="12" md="6">
+        <MudTextField Label="Название:" @bind-Value="_name" />
+    </MudItem>
+    <MudItem xs="12" md="6">
+        <MudTextField Label="Описание:" @bind-Value="_description" />
+    </MudItem>
+    <MudItem xs="12" md="6">
+        <MudTextField Label="Цена, руб.:" @bind-Value="_price" Step="0.01" />
+    </MudItem>
+    <MudItem xs="12" md="6">
+        <MudSelect Label="Категория:" @bind-Value="_category">
+            >
+        </MudSelect>
+    </MudItem>
+    <MudItem xs="12" md="6">
+        <MudTextField Label="Изображение (URL): " @bind-Value="_imageUrl" />
+    </MudItem>
+    <MudItem>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="AddProductAsync">Добавить товар</MudButton>
+    </MudItem>
+</MudForm>

@@ -1,4 +1,5 @@
-﻿@inject ICatalogue Catalogue;
+﻿@using Homework_2023_10_14.Components;
+@inject ICatalogue Catalogue;
 @page "/catalogue";
 <h3>Каталог</h3>
 <br />
@@ -12,21 +13,21 @@
 		</tr>
 	</thead>
 	<tbody>
-	@foreach(var item in _items)
-	{
-		<tr>
-			<td>@item.Key</td>
-			<td>@item.Value.Name</td>
-			<td>@item.Value.Price</td>
-			<td>
-				<img alt="" src="@item.Value.ImageLink">
-			</td>
-		</tr>
-	}
+		@foreach (var item in _items)
+		{
+			<tr>
+				<td>@item.Key</td>
+				<td>@item.Value.Name</td>
+				<td>@item.Value.Price</td>
+				<td>
+					<img alt="" src="@item.Value.ImageLink">
+				</td>
+			</tr>
+		}
 	</tbody>
 </table>
 @code {
-	private IReadOnlyList<KeyValuePair<Guid,Item>> _items;
+	private IReadOnlyList<KeyValuePair<Guid, Item>> _items;
 	protected override void OnInitialized()
 	{
 		base.OnInitialized();

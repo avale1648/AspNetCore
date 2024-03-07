@@ -1,0 +1,16 @@
+﻿@*@inject ICatalogue Catalogue;
+@page "/item-info/{ItemId: Guid}"
+<div>
+	<img src="@Item.ImageLink" alt="@Item.ImageLink"/>
+	<h1>@Item.Name</h1>
+	<p>@Item.Price</p>
+</div>
+@code {
+	public Guid ItemId { get; set; }
+	private Item Item { get; set; }
+	protected override async Task OnInitializedAsync()
+	{
+		await base.OnInitializedAsync();
+		Item = Catalogue.Read(ItemId).Value;
+	}
+}*@
